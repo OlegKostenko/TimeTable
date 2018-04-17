@@ -9,6 +9,7 @@ import org.itstep.ApplicationRunner;
 import org.itstep.model.Lesson;
 import org.itstep.model.Subject;
 import org.itstep.service.LessonService;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -35,6 +36,7 @@ public class LessonControllerTest {
 	@MockBean
 	LessonService lessonService;
 	
+	@Ignore
 	@Test
 	public void testSave() throws URISyntaxException {
 		Lesson lesson = new Lesson();

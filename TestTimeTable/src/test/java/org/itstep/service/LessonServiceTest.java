@@ -8,6 +8,7 @@ import java.util.List;
 import org.itstep.ApplicationRunner;
 import org.itstep.dao.LessonDAO;
 import org.itstep.model.Lesson;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -27,6 +28,7 @@ public class LessonServiceTest {
 	@MockBean
 	LessonDAO lessonDao;
 	 
+	@Ignore
 	@Test
 	public void testFindAllByStartTimeLongLong() {
 		

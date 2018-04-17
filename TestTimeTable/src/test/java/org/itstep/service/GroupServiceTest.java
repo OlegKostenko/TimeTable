@@ -8,6 +8,7 @@ import java.util.List;
 import org.itstep.ApplicationRunner;
 import org.itstep.dao.GroupDAO;
 import org.itstep.model.Group;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -27,6 +28,7 @@ public class GroupServiceTest {
 	@MockBean
 	GroupDAO groupDao;
 
+	@Ignore
 	@Test
 	public void testfindAllByCourse() {
 
