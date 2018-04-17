@@ -3,7 +3,6 @@ package org.itstep.service.impl;
 import java.util.List;
 
 import org.itstep.dao.TeacherDAO;
-import org.itstep.model.Subject;
 import org.itstep.model.Teacher;
 import org.itstep.service.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +27,12 @@ public class TeacherServiceImpl implements TeacherService{
 		return TeacherDao.getOne(login);
 	}
 	
-	public List<Teacher> findAllBySubject(Subject subject){
+	public List<Teacher> findAllBySubject(String subject){
 		return TeacherDao.findAllBySubject(subject);
 	}
 	
-	public void delete(String login) {
-		TeacherDao.delete(login);
+	public void delete(Teacher teacher) {
+		TeacherDao.delete(teacher);
 	}
 
 	public Teacher update(Teacher teacher) {

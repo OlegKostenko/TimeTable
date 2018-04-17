@@ -36,8 +36,7 @@ public class LessonServiceImpl implements LessonService{
 		return lessonDao.findAllByStartTime(startPeriod, endPeriod);
 	}
 
-	public void delete(Integer id) {
-		lessonDao.delete(id);
+	public void delete(Lesson lesson) {
+		lessonDao.delete(lesson);
 	}
-
 }

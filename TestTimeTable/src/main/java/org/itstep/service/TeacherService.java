@@ -2,7 +2,6 @@ package org.itstep.service;
 
 import java.util.List;
 
-import org.itstep.model.Subject;
 import org.itstep.model.Teacher;
 
 public interface TeacherService {
@@ -13,7 +12,7 @@ public interface TeacherService {
 	
 	Teacher get(String login);
 	
-	List<Teacher> findAllBySubject(Subject subject);
+	List<Teacher> findAllBySubject(String subject);
 	
-	void delete(String login);
+	void delete(Teacher techer);
 }

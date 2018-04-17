@@ -14,5 +14,5 @@ public interface LessonService {
 	
 	List<Lesson> findAllByStartTime(Long startPeriod, Long endPeriod);
 	
-	void delete(Integer id);
+	void delete(Lesson lesson);
 }

@@ -18,4 +18,27 @@ public class GroupServiceImpl implements GroupService{
 		return groupDao.findAllByCourse(course);
 	}
 
+	public Group save(Group group) {
+		if(groupDao.getOne(group.getName()) == null)
+		{
+			return groupDao.save(group);
+		}
+		return null;
+	}
+
+	public Group update(Group group) {
+		if(groupDao.getOne(group.getName()) != null)
+		{
+			return groupDao.save(group);
+		}
+		return null;
+	}
+
+	public Group get(String groupName) {
+		return groupDao.getOne(groupName);
+	}
+
+	public void delete(Group group) {
+		groupDao.delete(group);
+	}
 }
