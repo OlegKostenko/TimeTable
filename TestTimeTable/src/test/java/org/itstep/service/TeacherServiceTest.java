@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.itstep.ApplicationRunner;
 import org.itstep.dao.TeacherDAO;
-import org.itstep.model.Subject;
 import org.itstep.model.Teacher;
 import org.junit.Ignore;
 import org.junit.Test;
