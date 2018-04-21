@@ -53,7 +53,7 @@ public class SubjectController {
 	@DeleteMapping (consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.TEXT_PLAIN_VALUE })
 	ResponseEntity delete(@RequestBody Subject subject) {
 		subjectService.delete(subject);
-		return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity(HttpStatus.OK);
 	}
 
 }
