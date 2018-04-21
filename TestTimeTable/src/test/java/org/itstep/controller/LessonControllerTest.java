@@ -23,6 +23,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
@@ -100,5 +101,29 @@ public class LessonControllerTest {
 //  public void testGetOne() {
 //  }
 
+  @Test
+  public void testDelete() throws URISyntaxException {
+	  Mockito.doNothing().when(lessonService).delete(Mockito.any(Lesson.class));
+	  
+	  RequestEntity<Lesson> request = new RequestEntity<Lesson> (lessons.get(0), HttpMethod.POST, new URI("/lesson"));
+	  ResponseEntity<Lesson> response = restTemplate.exchange(request, Lesson.class);
+	  
+	  assertEquals(HttpStatus.OK, response.getStatusCode());
+	  Mockito.verify(lessonService, Mockito.times(1)).save(Mockito.any(Lesson.class));
+  }
+  @Test
+  public void testGetList() throws URISyntaxException {
+	  Mockito.when(lessonService.findAllByStartTime(Mockito.anyLong(), Mockito.anyLong())).thenReturn(lessons);
+	  
+	  HttpHeaders headers = new HttpHeaders();
+	  headers.add("startPeriod", "44");
+	  headers.add("endPeriod", "100");
+	  
+	  RequestEntity request = new RequestEntity(headers, HttpMethod.GET, new URI("/lesson/get-all-by-start-time"));
+	  ResponseEntity<List> response = restTemplate.exchange(request, List.class);
+	  
+	  assertEquals(HttpStatus.OK, response.getStatusCode());
+	  Mockito.verify(lessonService, Mockito.times(1)).findAllByStartTime(Mockito.anyLong(), Mockito.anyLong());
+  }
 }
 
