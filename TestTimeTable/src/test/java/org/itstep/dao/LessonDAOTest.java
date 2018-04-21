@@ -33,7 +33,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = ApplicationRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-
 public class LessonControllerTest {
 
   List<Lesson> lessons;
