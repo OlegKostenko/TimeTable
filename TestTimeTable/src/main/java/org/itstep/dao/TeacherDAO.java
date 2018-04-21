@@ -69,7 +69,7 @@ public class TeacherDAO {
 
 		session.getTransaction().begin();
 
-		Query query = session.createNativeQuery("SELECT * FROM TEACHERS WHERE SUBJECT_SUB_NAME=:sub_name", Teacher.class);
+		Query query = session.createNativeQuery("SELECT * FROM TEACHERS WHERE SUBJECT_SUBJECT_NAME=:sub_name", Teacher.class);
 		
 		query.setParameter("sub_name", subName);
 		
