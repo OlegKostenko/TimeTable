@@ -37,7 +37,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 public class LessonControllerTest {
 
-  List<Lesson> lessons;
+  List<Lesson> lessons = new ArrayList<Lesson>();
 
   @Autowired
   TestRestTemplate restTemplate;
@@ -92,14 +92,6 @@ public class LessonControllerTest {
 
     Mockito.verify(lessonService, Mockito.times(1)).save(Mockito.any(Lesson.class));
   }
-//
-//  @Test
-//  public void testUpdate() {
-//  }
-//
-//  @Test
-//  public void testGetOne() {
-//  }
 
   @Test
   public void testDelete() throws URISyntaxException {

@@ -55,16 +55,5 @@ public class SubjectControllerTest {
 		Mockito.verify(subjectService, Mockito.times(1)).save(Mockito.any(Subject.class));
 	}
 
-	@Test
-	public void testUpdate() {
-	}
-
-	@Test
-	public void testGetOne() {
-	}
-
-	@Test
-	public void testDelete() {
-	}
 
 }
