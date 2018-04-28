@@ -6,8 +6,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.itstep.ApplicationRunner;
+import org.itstep.model.Group;
+import org.itstep.model.Lesson;
 import org.itstep.model.Subject;
+import org.itstep.model.Teacher;
 import org.itstep.service.SubjectService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -27,18 +31,27 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = ApplicationRunner.class)
 @SpringBootTest(webEnvironment=WebEnvironment.RANDOM_PORT)
 public class SubjectControllerTest {
-
+	
+	Subject subject = new Subject();
+	
 	@MockBean
 	SubjectService subjectService;
 	
 	@Autowired
 	TestRestTemplate restTemplate;
 	
+	@Before
+	  public void setPreData() {
+
+	    
+	    subject.setName("QWAS");
+
+	  }
+
 	@Test
 	public void testSave() {
 		
-		Subject subject = new Subject();
-		subject.setName("Java");
+		
 		
 		Mockito.when(subjectService.save(Mockito.any(Subject.class))).thenReturn(subject);
 		
@@ -51,6 +64,17 @@ public class SubjectControllerTest {
 		
 		ResponseEntity<Subject> response = restTemplate.exchange(request, Subject.class);
 		
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		Mockito.verify(subjectService, Mockito.times(1)).save(Mockito.any(Subject.class));
+	}
+	
+	@Test
+	public void testDelete() throws URISyntaxException {
+		Mockito.doNothing().when(subjectService).delete(Mockito.any(Subject.class));
+		  
+		RequestEntity<Subject> request = new RequestEntity<Subject> (subject, HttpMethod.POST, new URI("/subject"));
+		ResponseEntity<Subject> response = restTemplate.exchange(request, Subject.class);
+		  
 		assertEquals(HttpStatus.OK, response.getStatusCode());
 		Mockito.verify(subjectService, Mockito.times(1)).save(Mockito.any(Subject.class));
 	}

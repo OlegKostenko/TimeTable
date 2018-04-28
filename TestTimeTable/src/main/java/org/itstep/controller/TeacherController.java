@@ -28,17 +28,20 @@ public class TeacherController {
 	@PostMapping( consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}  )
 	ResponseEntity<Teacher> save(@RequestBody Teacher teacher)
 	{
-		if(teacherService.save(teacher) != null) {
-			return new ResponseEntity<Teacher>(teacher, HttpStatus.OK);
+		Teacher teacherInDB = teacherService.save(teacher);
+		if(teacherInDB != null) {
+			return new ResponseEntity<Teacher>(teacherInDB, HttpStatus.OK);
 		}
 		return new ResponseEntity<Teacher>(HttpStatus.BAD_REQUEST);
 	}
 	
-	@PutMapping( consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
+	@PutMapping( consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE }, produces = {
+			MediaType.APPLICATION_JSON_UTF8_VALUE } )
 	ResponseEntity<Teacher> update(@RequestBody Teacher teacher)
 	{
-		if(teacherService.update(teacher) != null){
-			return new ResponseEntity<Teacher>(HttpStatus.OK);
+		Teacher savedTeacher = teacherService.update(teacher);
+		if(savedTeacher != null){
+			return new ResponseEntity<Teacher>(savedTeacher, HttpStatus.OK);
 		}
 		return new ResponseEntity<Teacher>(HttpStatus.BAD_REQUEST);
 	}
@@ -50,7 +53,7 @@ public class TeacherController {
 		if(teacher != null) {
 			return new ResponseEntity<Teacher>(teacher, HttpStatus.OK);
 		}
-			return new ResponseEntity<Teacher>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<Teacher>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping( path = "/get-by-subject", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
@@ -66,10 +69,7 @@ public class TeacherController {
 	@DeleteMapping( consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
 	ResponseEntity<Teacher> delete(@RequestBody Teacher teacher)
 	{
-		if(teacherService.get(teacher.getLogin()) != null) {
 			teacherService.delete(teacher);
 			return new ResponseEntity(HttpStatus.OK);
-		}
-		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 	}
 }

@@ -67,18 +67,6 @@ public class GroupControllerTest {
 	    Mockito.verify(groupService, Mockito.times(1)).save(Mockito.any(Group.class));
 	}
 
-	@Ignore
-	@Test
-	public void testUpdate() {
-		fail("Not yet implemented");
-	}
-
-	@Ignore
-	@Test
-	public void testGetOne() {
-		fail("Not yet implemented");
-	}
-
 	@Test
 	public void testDelete() throws URISyntaxException {
 		Mockito.doNothing().when(groupService).delete(Mockito.any(Group.class));

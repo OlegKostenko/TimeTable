@@ -28,16 +28,18 @@ public class LessonController {
 	
 	@PostMapping( consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	ResponseEntity<Lesson> save(@RequestBody Lesson lesson) {
-		if(lessonService.save(lesson) != null) {
-			return new ResponseEntity<Lesson>(lesson, HttpStatus.OK);
+		Lesson lessonInDB = lessonService.save(lesson);
+		if(lessonInDB != null) {
+			return new ResponseEntity<Lesson>(lessonInDB, HttpStatus.OK);
 		}
 		return new ResponseEntity<Lesson>(HttpStatus.METHOD_NOT_ALLOWED);
 	}
 	
 	@PutMapping( consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
 	ResponseEntity<Lesson> update(@RequestBody Lesson lesson) {
-		if(lessonService.update(lesson) != null) {
-			return new ResponseEntity<Lesson>(HttpStatus.OK);
+		Lesson savedLesson = lessonService.update(lesson);
+		if(savedLesson != null) {
+			return new ResponseEntity<Lesson>(savedLesson, HttpStatus.OK);
 		}
 		return new ResponseEntity<Lesson>(HttpStatus.BAD_REQUEST);
 	}
@@ -52,7 +54,7 @@ public class LessonController {
 	}
 	
 	
-	@DeleteMapping (consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.TEXT_PLAIN_VALUE })
+	@DeleteMapping (consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	ResponseEntity delete(@RequestBody Lesson lesson) {
 		lessonService.delete(lesson);
 		return new ResponseEntity(HttpStatus.OK);

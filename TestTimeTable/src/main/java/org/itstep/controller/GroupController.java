@@ -30,8 +30,9 @@ public class GroupController {
 	
 	@PostMapping( consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE})
 	ResponseEntity<Group> save(@RequestBody Group group) {
+		Group groupInDB = groupService.save(group);
 		if(groupService.save(group) != null) {
-			return new ResponseEntity<Group>(group, HttpStatus.OK);
+			return new ResponseEntity<Group>(groupInDB, HttpStatus.OK);
 		}
 		return new ResponseEntity<Group>(HttpStatus.METHOD_NOT_ALLOWED);
 	
@@ -39,17 +40,18 @@ public class GroupController {
 	
 	@PutMapping( consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
 	ResponseEntity<Group> update(@RequestBody Group group) {
-		if(groupService.update(group) != null) {
-			return new ResponseEntity<Group>(HttpStatus.OK);
+		Group savedGroup = groupService.update(group);
+		if(savedGroup != null) {
+			return new ResponseEntity<Group>(savedGroup, HttpStatus.OK);
 		}
 		return new ResponseEntity<Group>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@GetMapping( path = "/get-one", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
-	ResponseEntity<Lesson> getOne(@RequestBody String name) {
+	ResponseEntity<Group> getOne(@RequestBody String name) {
 		Group group = groupService.get(name);
 		if( group != null) {
-			return new ResponseEntity(group, HttpStatus.OK);
+			return new ResponseEntity<Group>(group, HttpStatus.OK);
 		}
 		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 	}
@@ -57,7 +59,7 @@ public class GroupController {
 	@DeleteMapping (consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.TEXT_PLAIN_VALUE })
 	ResponseEntity<Group> delete(@RequestBody Group group) {
 		groupService.delete(group);
-		return new ResponseEntity<Group>(HttpStatus.OK);
+		return new ResponseEntity(HttpStatus.OK);
 	}
 	
 	@GetMapping( path = "/get-by-course", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )

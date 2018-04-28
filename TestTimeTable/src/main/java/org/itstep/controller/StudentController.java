@@ -28,21 +28,23 @@ public class StudentController {
 	
 	@PostMapping( consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE}  )
 	ResponseEntity<Student> save(@RequestBody Student student) {
-		if(studentService.save(student) != null) {
-			return new ResponseEntity<Student>(student, HttpStatus.OK);
+		Student studentInDB = studentService.save(student);
+		if(studentInDB != null) {
+			return new ResponseEntity<Student>(studentInDB, HttpStatus.OK);
 		}
 		return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
 	}
 	
 	@PutMapping( consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
 	ResponseEntity<Student> update(@RequestBody Student student) {
-		if(studentService.update(student) != null) {
-			return new ResponseEntity<Student>(HttpStatus.OK);
+		Student savedStudent = studentService.update(student);
+		if(savedStudent != null) {
+			return new ResponseEntity<Student>(savedStudent, HttpStatus.OK);
 		}
-		return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 	}
 	
-	@GetMapping( path = "/get-one", produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
+	@GetMapping( path = "/get-one", consumes = {MediaType.ALL_VALUE }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	ResponseEntity<Student> getOne(@RequestBody String login) {
 		Student student = studentService.get(login);
 		if( student != null) {
@@ -51,13 +53,13 @@ public class StudentController {
 		return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
 	}
 	
-	@DeleteMapping (consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE, MediaType.TEXT_PLAIN_VALUE })
+	@DeleteMapping (consumes = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	ResponseEntity delete(@RequestBody Student student) {
 		studentService.delete(student);
 		return new ResponseEntity(HttpStatus.OK);
 	}
 	
-	@GetMapping( path = "/get-by-group", consumes = {MediaType.APPLICATION_JSON_UTF8_VALUE}, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
+	@GetMapping( path = "/get-by-group", consumes = {MediaType.ALL_VALUE }, produces = {MediaType.APPLICATION_JSON_UTF8_VALUE} )
 	ResponseEntity<List<Student>> findAllByGroup(@RequestBody String group)
 	{
 		List<Student> students = studentService.findAllByGroup(group);
