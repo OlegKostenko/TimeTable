@@ -56,37 +56,43 @@ public class GroupControllerTest {
 	@Test
 	public void testSave() throws URISyntaxException {
 		Mockito.when(groupService.save(Mockito.any(Group.class))).thenReturn(groups.get(0));
-	    
-	    
-	    RequestEntity<Group> request = new RequestEntity<Group> (groups.get(0), HttpMethod.POST, new URI("/group"));
-	    ResponseEntity<Lesson> response = restTemplate.exchange(request, Lesson.class);
 
-	    assertEquals(HttpStatus.OK, response.getStatusCode());
-	    assertEquals("QWAS", response.getBody().getSubject().getName());
+		RequestEntity<Group> request = new RequestEntity<Group>(groups.get(0), HttpMethod.POST, new URI("/group"));
 
-	    Mockito.verify(groupService, Mockito.times(1)).save(Mockito.any(Group.class));
-	}
-
-	@Test
-	public void testDelete() throws URISyntaxException {
-		Mockito.doNothing().when(groupService).delete(Mockito.any(Group.class));
-		  
-		RequestEntity<Group> request = new RequestEntity<Group> (groups.get(0), HttpMethod.POST, new URI("/group"));
 		ResponseEntity<Group> response = restTemplate.exchange(request, Group.class);
-		  
 		assertEquals(HttpStatus.OK, response.getStatusCode());
+
 		Mockito.verify(groupService, Mockito.times(1)).save(Mockito.any(Group.class));
 	}
 
 	@Test
-	public void testFindAllByCourse() throws URISyntaxException {
-		Mockito.when(groupService.findAllByCourse(Mockito.anyString())).thenReturn(groups);
-		  
-		RequestEntity request = new RequestEntity(groups.get(0).getCourse(), HttpMethod.GET, new URI("/get-by-course"));
-		ResponseEntity<List> response = restTemplate.exchange(request, List.class);
-		  
+	public void testDelete() throws URISyntaxException {
+Mockito.doNothing().when(groupService).delete(Mockito.any(Group.class));
+		
+		RequestEntity<Group> request = new RequestEntity<Group>(groups.get(0), HttpMethod.DELETE, new URI("/group"));
+
+		ResponseEntity<HttpStatus> response = restTemplate.exchange(request, HttpStatus.class);
 		assertEquals(HttpStatus.OK, response.getStatusCode());
-		Mockito.verify(groupService, Mockito.times(1)).findAllByCourse(groups.get(0).getCourse());
+
+		Mockito.verify(groupService, Mockito.times(1)).delete(Mockito.any(Group.class));
+
+}
+
+
+	@Test
+	public void testFindAllByCourse() throws URISyntaxException {
+Mockito.when(groupService.findAllByCourse(Mockito.anyString())).thenReturn(groups);
+		
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("course", "1");
+		
+		RequestEntity request = new RequestEntity(headers, HttpMethod.GET, new URI("/group/get-by-course"));
+		ResponseEntity<List> response = restTemplate.exchange(request, List.class);
+		
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+		Mockito.verify(groupService, Mockito.times(1)).findAllByCourse(Mockito.anyString());
+		
+		assertEquals(1, response.getBody().size());
 	}
 
 }
